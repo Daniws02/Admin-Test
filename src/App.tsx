@@ -1,10 +1,9 @@
 import React from 'react';
+import AppLayout from './Core/Layout/AppLayout';
 
 const App = () => {
   return (
-    <div>
-      <h1>Olá, Webpack com React!</h1>
-    </div>
+    <AppLayout/>
   );
 };
 

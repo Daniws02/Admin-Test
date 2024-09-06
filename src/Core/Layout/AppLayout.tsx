@@ -9,17 +9,24 @@ const items1 = ['1', '2', '3'].map((key) => ({
   label: `nav ${key}`,
 }));
 
-const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
+const routes = [
+  { name: 'Users', icon: UserOutlined, path: '/users' },
+  { name: 'Laptops', icon: LaptopOutlined, path: '/laptops' },
+  { name: 'Notifications', icon: NotificationOutlined, path: '/notifications' },
+];
+
+const items2 = routes.map((route, index) => {
   const key = String(index + 1);
   return {
     key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
+    icon: React.createElement(route.icon),
+    label: route.name,
     children: new Array(4).fill(null).map((_, j) => {
       const subKey = index * 4 + j + 1;
       return {
         key: subKey,
         label: `option${subKey}`,
+        path: `${route.path}/option${subKey}`,
       };
     }),
   };

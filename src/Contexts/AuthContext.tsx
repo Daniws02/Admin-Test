@@ -13,9 +13,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const login = (username: string, password: string) => {
     fetch('./users.json')
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
       .then(users => {
-        console.log('Users fetched:', users); // Adicione isso para verificar os usuários
         const user = users.find(
           (user: { username: string; password: string }) => user.username === username && user.password === password
         );
@@ -25,7 +29,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           alert('Invalid credentials');
         }
       })
-      .catch(error => console.error('Error fetching users:', error));
+      .catch(error => {
+        console.error('Error fetching users:', error);
+        alert('Error fetching user data');
+      });
   };
 
   const logout = () => {

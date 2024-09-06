@@ -25,7 +25,7 @@ const AppLayout: React.FC = () => {
             flex: 1,
             minWidth: 0,
           }}
-          items={menuItems} // Aqui usamos os itens importados
+          items={menuItems}
         />
       </Header>
       <Layout>
@@ -41,7 +41,7 @@ const AppLayout: React.FC = () => {
               height: '100%',
               borderRight: 0,
             }}
-            items={menuItems} // Usa os mesmos itens para o menu lateral
+            items={menuItems}
           />
         </Sider>
         <Layout

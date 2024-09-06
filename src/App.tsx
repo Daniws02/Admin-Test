@@ -1,8 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './Contexts/AuthContext';
-import AppLayout from './Core/Layout/AppLayout';
 import LoginForm from './Components/LoginForm';
+import AppLayout from './Core/Layout/AppLayout';
+
+const Home = () => <div>Home Page</div>;
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();

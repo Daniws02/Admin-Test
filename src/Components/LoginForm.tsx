@@ -9,9 +9,8 @@ const LoginForm: React.FC = () => {
   const { login } = useAuth();
 
   const onFinish = (values: any) => {
-    console.log('Received values:', values);
-    login();
-    window.location.href = '/';
+    console.log('Form values:', values);
+    login(values.username, values.password);
   };
 
   return (

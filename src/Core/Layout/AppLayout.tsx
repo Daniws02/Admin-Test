@@ -1,36 +1,8 @@
 import React from 'react';
 import { Layout, Menu, Breadcrumb, theme } from 'antd';
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import { menuItems } from './menuItems';
 
 const { Header, Content, Footer, Sider } = Layout;
-
-const items1 = ['1', '2', '3'].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}));
-
-const routes = [
-  { name: 'Users', icon: UserOutlined, path: '/users' },
-  { name: 'Laptops', icon: LaptopOutlined, path: '/laptops' },
-  { name: 'Notifications', icon: NotificationOutlined, path: '/notifications' },
-];
-
-const items2 = routes.map((route, index) => {
-  const key = String(index + 1);
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(route.icon),
-    label: route.name,
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-        path: `${route.path}/option${subKey}`,
-      };
-    }),
-  };
-});
 
 const AppLayout: React.FC = () => {
   const {
@@ -49,12 +21,11 @@ const AppLayout: React.FC = () => {
         <Menu
           theme="dark"
           mode="horizontal"
-          //defaultSelectedKeys={['2']}
-          items={items1}
           style={{
             flex: 1,
             minWidth: 0,
           }}
+          items={menuItems} // Aqui usamos os itens importados
         />
       </Header>
       <Layout>
@@ -66,13 +37,11 @@ const AppLayout: React.FC = () => {
         >
           <Menu
             mode="inline"
-            //defaultSelectedKeys={['1']}
-            //defaultOpenKeys={['sub1']}
             style={{
               height: '100%',
               borderRight: 0,
             }}
-            items={items2}
+            items={menuItems} // Usa os mesmos itens para o menu lateral
           />
         </Sider>
         <Layout

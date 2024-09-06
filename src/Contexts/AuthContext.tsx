@@ -1,4 +1,5 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import axios from 'axios';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -12,21 +13,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   const login = (username: string, password: string) => {
-    fetch('./users.json')
+    axios.get('http://localhost:3000/user')
       .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(users => {
+        const users = response.data;
         const user = users.find(
-          (user: { username: string; password: string }) => user.username === username && user.password === password
+          (user: { username: string; password: string }) =>
+            user.username === username && user.password === password
         );
+
         if (user) {
           setIsAuthenticated(true);
+          localStorage.setItem('isAuthenticated', 'true');
         } else {
-          alert('Invalid credentials');
+          alert('Invalid username or password');
         }
       })
       .catch(error => {
@@ -37,7 +36,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const logout = () => {
     setIsAuthenticated(false);
+    localStorage.removeItem('isAuthenticated');
   };
+
+  useEffect(() => {
+    const authStatus = localStorage.getItem('isAuthenticated');
+    if (authStatus === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>

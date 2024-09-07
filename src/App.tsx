@@ -1,52 +1,41 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import LoginForm from './Components/LoginForm';
+import AppLayout from './Core/Layout/AppLayout';
 
-interface ProtectedRouteProps {
-  isAllowed: boolean;
-  children: React.ReactNode;
-}
-
-const Home = () => {
-  const navigate = useNavigate();
-
-  return (
-    <div>
-      <h1>Home Page</h1>
-      <button onClick={() => navigate('/dashboard')}>Go to Dashboard</button>
-    </div>
-  );
-};
-
-const Dashboard = () => <h1>Dashboard (Protected)</h1>;
-
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ isAllowed, children }) => {
-  return isAllowed ? <>{children}</> : <Navigate to="/" />;
-};
+const users = [
+  {
+    username: 'testuser',
+    password: 'testpassword',
+  },
+];
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const login = (username: string, password: string) => {
+    const user = users.find((user) => user.username === username && user.password === password);
+
+    if (user) {
+      console.log('Login bem-sucedido');
+      setIsAuthenticated(true);
+    } else {
+      console.log('Falha no login: Usuário ou senha incorretos');
+      setIsAuthenticated(false);
+    }
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+  };
+
   return (
     <Router>
-      <div>
-        <nav>
-          <button onClick={() => setIsAuthenticated(!isAuthenticated)}>
-            {isAuthenticated ? 'Logout' : 'Login'}
-          </button>
-        </nav>
-
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute isAllowed={isAuthenticated}>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </div>
+      {isAuthenticated ? (
+        <AppLayout logout={logout} />
+      ) : (
+        <LoginForm login={login} />
+      )}
     </Router>
   );
 }

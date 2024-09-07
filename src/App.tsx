@@ -1,56 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LoginForm from './Components/LoginForm';
-import AppLayout from './Core/Layout/AppLayout';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 
-const simulatedUsers = [
-  { username: 'testuser', password: 'testpassword' },
-];
+interface ProtectedRouteProps {
+  isAllowed: boolean;
+  children: React.ReactNode;
+}
 
-const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+const Home = () => {
+  const navigate = useNavigate();
 
-  const login = (username: string, password: string) => {
-    setTimeout(() => {
-      const user = simulatedUsers.find(
-        (user) => user.username === username && user.password === password
-      );
+  return (
+    <div>
+      <h1>Home Page</h1>
+      <button onClick={() => navigate('/dashboard')}>Go to Dashboard</button>
+    </div>
+  );
+};
 
-      if (user) {
-        setIsAuthenticated(true);
-        localStorage.setItem('isAuthenticated', 'true');
-      } else {
-        alert('Invalid username or password');
-      }
-    }, 1000);
-  };
+const Dashboard = () => <h1>Dashboard (Protected)</h1>;
 
-  const logout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem('isAuthenticated');
-  };
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ isAllowed, children }) => {
+  return isAllowed ? <>{children}</> : <Navigate to="/" />;
+};
 
-  useEffect(() => {
-    const authStatus = localStorage.getItem('isAuthenticated');
-    if (authStatus === 'true') {
-      setIsAuthenticated(true);
-    }
-  }, []);
-
-  const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
-  };
+function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
     <Router>
-      <Routes>
-        {/* Rota protegida */}
-        <Route path="/" element={<ProtectedRoute><AppLayout logout={logout} /></ProtectedRoute>} />
-        {/* Rota de login */}
-        <Route path="/login" element={<LoginForm login={login} />} />
-      </Routes>
+      <div>
+        <nav>
+          <button onClick={() => setIsAuthenticated(!isAuthenticated)}>
+            {isAuthenticated ? 'Logout' : 'Login'}
+          </button>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute isAllowed={isAuthenticated}>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </div>
     </Router>
   );
-};
+}
 
 export default App;

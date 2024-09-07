@@ -21,14 +21,14 @@ const routes = [
         path: '/users/list',
       },
       {
-        key: 'create',
-        label: 'Create User',
-        path: '/users/create',
+        key: 'permissions',
+        label: 'Manage Permissions',
+        path: '/users/permissions',
       },
       {
-        key: 'edit',
-        label: 'Edit User',
-        path: '/users/edit',
+        key: 'history',
+        label: 'Access History',
+        path: '/users/history',
       },
     ],
   },
@@ -48,6 +48,11 @@ const routes = [
         label: 'Security Settings',
         path: '/settings/security',
       },
+      {
+        key: 'security',
+        label: 'System Settings',
+        path: '/settings/security'
+      }
     ],
   },
   {
@@ -60,6 +65,11 @@ const routes = [
         key: 'monthly',
         label: 'Monthly Report',
         path: '/reports/monthly',
+      },
+      {
+        key: 'annual',
+        label: 'Annual Report',
+        path: '/reports/annual',
       },
       {
         key: 'annual',

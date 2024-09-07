@@ -25,7 +25,7 @@ function App() {
       console.log('Login bem-sucedido');
       setIsAuthenticated(true);
       setCurrentUser(username);
-      localStorage.setItem('isAuthenticated', 'true'); // Armazena o estado de autenticação
+      localStorage.setItem('isAuthenticated', 'true');
     } else {
       console.log('Falha no login: Usuário ou senha incorretos');
       setIsAuthenticated(false);
@@ -35,14 +35,13 @@ function App() {
   const logout = () => {
     setIsAuthenticated(false);
     setCurrentUser(null);
-    localStorage.setItem('isAuthenticated', 'false'); // Remove o estado de autenticação
+    localStorage.setItem('isAuthenticated', 'false');
   };
 
   useEffect(() => {
     const authStatus = localStorage.getItem('isAuthenticated');
     if (authStatus === 'true') {
       setIsAuthenticated(true);
-      // Set the username if needed, in real apps this could be fetched from a secure source
       setCurrentUser('testuser');
     }
   }, []);

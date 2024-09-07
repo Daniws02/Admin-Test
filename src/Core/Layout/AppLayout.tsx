@@ -1,14 +1,16 @@
 import React from 'react';
-import { Layout, Menu, Breadcrumb, theme, Button } from 'antd';
+import { Layout, Menu, Button, Typography, theme } from 'antd';
 import { menuItems } from './menuItems';
+import { HomeOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 interface AppLayoutProps {
   logout: () => void;
+  username: string;
 }
 
-const AppLayout: React.FC<{ logout: () => void }> = ({ logout }) => {
+const AppLayout: React.FC<AppLayoutProps> = ({ logout, username }) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -16,24 +18,33 @@ const AppLayout: React.FC<{ logout: () => void }> = ({ logout }) => {
   return (
     <Layout>
       <Header style={{ display: 'flex', alignItems: 'center' }}>
-        <div className="demo-logo" />
-        <Menu theme="dark" mode="horizontal" style={{ flex: 1, minWidth: 0 }} items={menuItems} />
-        <Button onClick={logout} style={{ marginLeft: 'auto' }} type="primary">
-          Logout
-        </Button>
+        <div style={{ display: 'flex', alignItems: 'center', marginRight: '16px' }}>
+          <HomeOutlined style={{ fontSize: '24px', color: 'white', marginRight: '8px' }} />
+          <div style={{ color: 'white', fontSize: '18px' }}>CompanyName</div>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
+          <UserOutlined style={{ fontSize: '18px', color: 'white', marginRight: '8px' }} />
+          <Typography style={{ color: 'white', fontSize: '18px', marginRight: '16px' }}>
+            {username}
+          </Typography>
+          <Button onClick={logout} type="primary" icon={<LogoutOutlined />} />
+        </div>
       </Header>
       <Layout>
         <Sider width={200} style={{ background: colorBgContainer }}>
           <Menu mode="inline" style={{ height: '100%', borderRight: 0 }} items={menuItems} />
         </Sider>
         <Layout style={{ padding: '0 24px 24px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
-          <Content style={{ padding: 24, margin: 0, minHeight: 280, background: colorBgContainer, borderRadius: borderRadiusLG }}>
-            <h1>Protected Content</h1>
+          <Content
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG,
+            }}
+          >
+            Content
           </Content>
         </Layout>
       </Layout>

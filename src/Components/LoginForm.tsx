@@ -1,13 +1,14 @@
 import React from 'react';
 import { Form, Input, Button, Card, Typography } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { useAuth } from '../Contexts/AuthContext';
 
 const { Title } = Typography;
 
-const LoginForm: React.FC = () => {
-  const { login } = useAuth();
+interface LoginFormProps {
+  login: (username: string, password: string) => void;
+}
 
+const LoginForm: React.FC<LoginFormProps> = ({ login }) => {
   const onFinish = (values: any) => {
     console.log('Form values:', values);
     login(values.username, values.password);

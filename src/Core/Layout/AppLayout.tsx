@@ -4,7 +4,11 @@ import { menuItems } from './menuItems';
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const AppLayout: React.FC = () => {
+interface AppLayoutProps {
+  logout: () => void;
+}
+
+const AppLayout: React.FC<AppLayoutProps> = ({ logout }) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();

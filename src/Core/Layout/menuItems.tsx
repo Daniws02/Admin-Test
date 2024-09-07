@@ -1,119 +1,106 @@
 import React from 'react';
-import { UserOutlined, LaptopOutlined, NotificationOutlined, DashboardOutlined, SettingOutlined, FileOutlined } from '@ant-design/icons';
+import {
+  DashboardOutlined,
+  UserOutlined,
+  SettingOutlined,
+  FileOutlined,
+  NotificationOutlined,
+  LaptopOutlined,
+  DollarOutlined,
+  StockOutlined,
+  PieChartOutlined,
+  CustomerServiceOutlined,
+  CalendarOutlined,
+  ProjectOutlined,
+  ReconciliationOutlined
+} from '@ant-design/icons';
 
 const routes = [
   {
     key: 'dashboard',
     icon: <DashboardOutlined />,
     label: 'Dashboard',
-    path: '/dashboard',
-    children: [],
+    path: '/dashboard'
   },
   {
     key: 'users',
     icon: <UserOutlined />,
     label: 'Users',
-    path: '/users',
-    children: [
-      {
-        key: 'list',
-        label: 'User List',
-        path: '/users/list',
-      },
-      {
-        key: 'permissions',
-        label: 'Manage Permissions',
-        path: '/users/permissions',
-      },
-      {
-        key: 'history',
-        label: 'Access History',
-        path: '/users/history',
-      },
-    ],
+    path: '/users'
   },
   {
     key: 'settings',
     icon: <SettingOutlined />,
     label: 'Settings',
-    path: '/settings',
-    children: [
-      {
-        key: 'profile',
-        label: 'Profile Settings',
-        path: '/settings/profile',
-      },
-      {
-        key: 'security',
-        label: 'Security Settings',
-        path: '/settings/security',
-      },
-      {
-        key: 'security',
-        label: 'System Settings',
-        path: '/settings/security'
-      }
-    ],
+    path: '/settings'
   },
   {
     key: 'reports',
     icon: <FileOutlined />,
     label: 'Reports',
-    path: '/reports',
-    children: [
-      {
-        key: 'monthly',
-        label: 'Monthly Report',
-        path: '/reports/monthly',
-      },
-      {
-        key: 'annual',
-        label: 'Annual Report',
-        path: '/reports/annual',
-      },
-      {
-        key: 'annual',
-        label: 'Annual Report',
-        path: '/reports/annual',
-      },
-    ],
+    path: '/reports'
   },
   {
     key: 'notifications',
     icon: <NotificationOutlined />,
     label: 'Notifications',
-    path: '/notifications',
-    children: [],
+    path: '/notifications'
   },
   {
     key: 'products',
     icon: <LaptopOutlined />,
     label: 'Products',
-    path: '/products',
-    children: [
-      {
-        key: 'inventory',
-        label: 'Product Inventory',
-        path: '/products/inventory',
-      },
-      {
-        key: 'new-product',
-        label: 'Add New Product',
-        path: '/products/new',
-      },
-    ],
+    path: '/products'
   },
+  {
+    key: 'sales',
+    icon: <DollarOutlined />,
+    label: 'Sales',
+    path: '/sales'
+  },
+  {
+    key: 'inventory',
+    icon: <StockOutlined />,
+    label: 'Inventory',
+    path: '/inventory'
+  },
+  {
+    key: 'analytics',
+    icon: <PieChartOutlined />,
+    label: 'Analytics',
+    path: '/analytics'
+  },
+  {
+    key: 'support',
+    icon: <CustomerServiceOutlined />,
+    label: 'Support',
+    path: '/support'
+  },
+  {
+    key: 'calendar',
+    icon: <CalendarOutlined />,
+    label: 'Calendar',
+    path: '/calendar'
+  },
+  {
+    key: 'projects',
+    icon: <ProjectOutlined />,
+    label: 'Projects',
+    path: '/projects'
+  },
+  {
+    key: 'tasks',
+    icon: <ReconciliationOutlined />,
+    label: 'Tasks',
+    path: '/tasks'
+  }
 ];
+
 
 const menuItems = routes.map((route) => ({
   key: route.key,
   icon: route.icon,
-  label: route.label,
-  children: route.children.map((subRoute) => ({
-    key: subRoute.key,
-    label: subRoute.label,
-    path: subRoute.path,
-  })),
+  label: route.label
 }));
 
 export { menuItems, routes };
